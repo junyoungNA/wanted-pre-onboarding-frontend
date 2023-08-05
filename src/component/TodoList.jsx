@@ -1,9 +1,11 @@
 import React, { useState, useContext } from 'react';
-import {instance} from '../util/axios.js';
 import { TodoContext } from '../context/todo.js';
 const TodoList = () => {
     const [todo, setTodo] = useState('');
-    const {todos:todoList, addTodo, deleteTodo} = useContext(TodoContext);
+    const [putTodo, setPutTodo] = useState(''); //수정 input
+    const [isUpdate, setUpdate]  = useState(false) //수정중 확인
+
+    const {todos:todoList, addTodo, updateTodo, deleteTodo} = useContext(TodoContext);
 
     const submitHandler = async (event) => {
         event.preventDefault();
@@ -13,8 +15,21 @@ const TodoList = () => {
         }
     }
 
-    const onChangHandler = (todo) => (event)=> {
-        console.log(todo, event, 'change');
+    const onChangHandler = (todo) => async (event) => {
+        try {
+            const newTodo = {...todo, isCompleted: !todo.isCompleted};
+            const res = await updateTodo(newTodo);
+            
+        }catch(error) {
+            console.log(error);
+        }
+    }
+    const onDeleteHandler = (id) => async(evnet) => {
+        try {
+            const res = await deleteTodo(id);
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -24,6 +39,8 @@ const TodoList = () => {
                     <label>
                         <input type="checkbox" checked={todo.isCompleted} onChange={onChangHandler(todo)}/>
                         <span>{todo.todo}</span>
+                        <button data-testid="modify-button">수정</button>
+                        <button data-testid="delete-button" onClick={onDeleteHandler(todo.id)}>삭제</button>
                     </label>
                 </li>
             )}

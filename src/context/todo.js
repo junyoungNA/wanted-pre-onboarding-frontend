@@ -35,28 +35,29 @@ export const TodoProvider = ({ children }) => {
         
     };
 
-    const deleteTodo = async (index) => {
+    const deleteTodo = async (id) => {
         try {
-            const res = await instance.put(`/todos/${index}`);
-            console.log(res,'todopost');
-            if(res.status === 200 || res.status === 201) {
-                const findIndx = todos.findIndex((todo) => todo.id === index);
+            const res = await instance.delete(`/todos/${id}`);
+            if(res.status === 204) {
+                const findIndx = todos.findIndex((todo) => todo.id === id);
+                const newTodos = todos.slice();
+                newTodos.splice(findIndx, 1);
+                console.log(newTodos);
+                setTodos(newTodos);
             }
         }catch(error) {
             console.log(error);
         }
-        const newTodos = todos.slice();
-        newTodos.splice(index, 1);
-        setTodos(newTodos);
     };
     
     const updateTodo = async (newTodo) =>{ 
         try {
-            const res = await instance.put(`/todos/${newTodo.id}`, {newTodo});
-            console.log(res,'todopost');
-            if(res.status === 200 || res.status === 201) {
+            const res = await instance.put(`/todos/${newTodo.id}`, newTodo);
+            if(res.status === 200) {
                 const findIndx = todos.findIndex((todo) => todo.id === newTodo.id);
-                console.log(findIndx);
+                const newTodos = todos.slice();
+                newTodos[findIndx] = res.data;
+                setTodos(newTodos);
             }
         }catch(error) {
             console.log(error);
