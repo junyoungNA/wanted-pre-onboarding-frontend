@@ -25,7 +25,7 @@ export const AuthProvider = ({children}) => {
     });
 
     const dispatch = (type , payload) => {
-        console.log('type', type, payload);
+        // console.log('type', type, payload);
         defaultDispatch({type,payload});
     }
 

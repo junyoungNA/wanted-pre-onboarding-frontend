@@ -1,11 +1,14 @@
 import Router from './route/Router';
 import './App.css';
 import { AuthProvider } from './context/auth';
+import { TodoProvider } from './context/todo';
 
 function App() {
   return (
     <AuthProvider>
-      <Router />
+      <TodoProvider>
+        <Router />
+      </TodoProvider>
     </AuthProvider>
   );
 }

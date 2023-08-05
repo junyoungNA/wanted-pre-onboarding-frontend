@@ -1,34 +1,36 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import {instance} from '../util/axios.js';
+import { TodoContext } from '../context/todo.js';
 const TodoList = () => {
-    const [todoList, setTodoList] = useState([]);
+    const [todo, setTodo] = useState('');
+    const {todos:todoList, addTodo, deleteTodo} = useContext(TodoContext);
 
-    useEffect(() => {
-        setTodoList(getTodoList());
-    }, [])
-
-    const getTodoList = async() => {
-        try {
-            const res = await instance.get('/todos');
-            console.log(res, 'res');
-            return res.data;
-        }catch(error) {
-            console.log(error);
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        const res = await addTodo({todo});
+        if(res === 201 ) {
+            setTodo('');
         }
     }
-    
+
+    const onChangHandler = (todo) => (event)=> {
+        console.log(todo, event, 'change');
+    }
+
     return (
         <>
             {todoList.length > 0 && todoList?.map((todo) => 
-                <li>
+                <li key={todo.id}>
                     <label>
-                        <input type="checkbox" />
-                        <span></span>
+                        <input type="checkbox" checked={todo.isCompleted} onChange={onChangHandler(todo)}/>
+                        <span>{todo.todo}</span>
                     </label>
                 </li>
             )}
-            <input data-testid="new-todo-input"  placeholder='todo'/>  
-            <button data-testid="new-todo-add-button">추가</button>
+            <form onSubmit={submitHandler} >
+                <input data-testid="new-todo-input"  value={todo} onChange={(event) =>setTodo(event.target.value) }placeholder='todo'/>  
+                <button data-testid="new-todo-add-button" type='submit'>추가</button>
+            </form>
         </>
     )
 }
