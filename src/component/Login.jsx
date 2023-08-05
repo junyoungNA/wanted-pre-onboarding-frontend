@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Auth.css';
 import {instance} from '../util/axios';
 import { useNavigate } from 'react-router-dom';
+import {useAuthDispatch, useAuthState } from '../context/auth';
 
 const Login = () => {
     const navigate = useNavigate();
+    const dispatch = useAuthDispatch();
+    const {authenticated} = useAuthState(); //context auth
     const [inputs, setInputs] = useState({
         email:'',     // 이메일 
         password:'',    // 비밀번호
@@ -13,16 +16,23 @@ const Login = () => {
     const {email, password} = inputs;
      // 유효성 검사 실패시 버튼에 disabled 부여
     const [isDisabled, setDisabled] = useState(false);
+
+    useEffect(() => {
+        if(authenticated) {
+            navigate('/todo');
+        } 
+    },[authenticated, navigate])
     
     const submitHandler = async (evnet) => {
         evnet.preventDefault();
-        console.log(checkValue('email', email));
-        console.log(checkValue('password', password));
         //true면 return
         if(checkValue('email', email) ||checkValue('password',password)) return;
-        const res = await instance.post('/auth/login',inputs);
+        const res = await instance.post('/auth/signin',inputs);
+        console.log(res,'res');
         if(res.status === 200 | res.status === 201) {
-            navigate('/');
+            dispatch('LOGIN', res.data.access_token);
+            console.log(authenticated,'res');
+            // navigate('/');
         }
         
     }
@@ -63,7 +73,7 @@ const Login = () => {
             [type]: error,
         }));
         setDisabled(isDisabled);
-        //에러가 있으면 trueq보내서 회원가입 못하게
+        //에러가 있으면 true보내서 회원가입 못하게
         return error ? true : false;
     };
 

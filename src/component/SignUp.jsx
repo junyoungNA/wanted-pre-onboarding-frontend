@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Auth.css';
 import {instance} from '../util/axios';
 import { useNavigate } from 'react-router-dom';
+import {useAuthState } from '../context/auth';
 
 const SignUp = () => {
     const navigate = useNavigate();
+    const {authenticated} = useAuthState(); //context auth
     const [inputs, setInputs] = useState({
         email:'',     // 이메일 
         password:'',    // 비밀번호
@@ -13,6 +15,12 @@ const SignUp = () => {
     const {email, password} = inputs;
      // 유효성 검사 실패시 버튼에 disabled 부여
     const [isDisabled, setDisabled] = useState(false);
+
+    useEffect(() => {
+        if(authenticated) {
+            navigate('/todo');
+        } 
+    },[authenticated, navigate])
     
     const submitHandler = async (evnet) => {
         evnet.preventDefault();
@@ -20,9 +28,8 @@ const SignUp = () => {
         if(checkValue('email', email) ||checkValue('password',password)) return;
         const res = await instance.post('/auth/signup',inputs);
         if(res.status === 200 | res.status === 201) {
-            navigate('/');
+            navigate('/signup');
         }
-        
     }
 
     const onChangeHandler = (event) => {

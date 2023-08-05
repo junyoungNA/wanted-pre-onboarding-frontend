@@ -4,6 +4,7 @@ import Main from '../component/Main';
 
 import React from 'react'
 import Login from '../component/Login';
+import Todo from '../component/Todo';
 
 const Router = () => {
   return (
@@ -11,6 +12,7 @@ const Router = () => {
       <Route path='/' element={<Main/>} />
       <Route path="/signup" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/todo" element={<Todo />} />
     </Routes>
   )
 }

@@ -1,35 +1,27 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
-import axios from "../util/axios";
+
 const DispatchContext = createContext(null);
 
 const reducer = (state, {type ,payload }) => {
-    console.log(state, type, payload);
     switch(type) {
         case "LOGIN" :
-            localStorage.setItem('accessToken',payload.token);
+            localStorage.setItem('accessToken',payload);
             return {...state, authenticated : true}
         case "LOGOUT" :
             localStorage.removeItem('accessToken')
             return {...state, authenticated : false}
-        case "STOP_LOADING" :
-            return {
-                ...state,
-                loading : false,
-            }
         default : throw new Error(`Unknown action type: ${type}`)
     }
+    
 }
-
 
 const StateContext = createContext({
     authenticated:false,
-    loading : true,
 });
 
-export const Provider = ({children}) => {
+export const AuthProvider = ({children}) => {
     const [state, defaultDispatch] = useReducer(reducer, {
         authenticated: false,
-        loading:true,
     });
 
     const dispatch = (type , payload) => {
@@ -38,16 +30,13 @@ export const Provider = ({children}) => {
     }
 
     useEffect(() => {
-        async function loadUser() {
-            try {
-
-            }catch (error) {
-                console.log(error);
-            }finally {
-                dispatch('STOP_LOADING');
-            }
-        }
-        loadUser();
+        const token = localStorage.getItem('accessToken');
+        // console.log((typeof token));
+        if(token === 'null' || token === undefined || token === null) {
+            dispatch('LOGOUT');
+            return;
+        };
+        dispatch('LOGIN', token);
     },[]);
 
     return (
