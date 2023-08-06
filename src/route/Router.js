@@ -3,7 +3,7 @@ import SignUp from '../component/SignUp';
 import Main from '../component/Main';
 
 import React from 'react'
-import Login from '../component/Login';
+import SignIn from '../component/SignIn';
 import TodoList from '../component/TodoList';
 
 const Router = () => {
@@ -11,7 +11,7 @@ const Router = () => {
     <Routes>
       <Route path='/' element={<Main/>} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/login" element={<Login />} />
+      <Route path="/signin" element={<SignIn />} />
       <Route path="/todo" element={<TodoList />} />
     </Routes>
   )

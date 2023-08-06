@@ -20,13 +20,18 @@ a {
     transform: translate(-50%, -50%);
 }
 
-.nav-box a {
+.nav-box > button,
+.nav-box > a {
     display: flex;
     align-items: center;
     justify-content: center;
     border: 2px solid gray;
-    height: 30px;
+    height: 40px;
     border-radius: 5px;
     color: black;
     margin-bottom: 15px;
+    background-color: white;
+    font-size: medium;
+    cursor: pointer;
 }
+

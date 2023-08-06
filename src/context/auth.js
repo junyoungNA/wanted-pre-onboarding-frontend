@@ -31,7 +31,7 @@ export const AuthProvider = ({children}) => {
 
     useEffect(() => {
         const token = localStorage.getItem('accessToken');
-        // console.log((typeof token));
+        console.log(token);
         if(token === 'null' || token === undefined || token === null) {
             dispatch('LOGOUT');
             return;

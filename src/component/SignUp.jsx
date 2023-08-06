@@ -28,7 +28,7 @@ const SignUp = () => {
         if(checkValue('email', email) ||checkValue('password',password)) return;
         const res = await instance.post('/auth/signup',inputs);
         if(res.status === 200 || res.status === 201) {
-            navigate('/login');
+            navigate('/signin');
         }
     }
 

@@ -1,12 +1,23 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { TodoContext } from '../context/todo.js';
+import { useAuthState } from '../context/auth.js';
 import './Todo.css';
+import { useNavigate } from 'react-router-dom';
+
 const TodoList = () => {
     const [todo, setTodo] = useState('');
+    const  navigate = useNavigate();
     const [modifyTodo, setModifyTodo] = useState(''); //수정 input
     const [isModify, setModify]  = useState(null) //수정중 확인
+    const  {authenticated} = useAuthState();
 
     const {todos:todoList, addTodo, updateTodo, deleteTodo} = useContext(TodoContext);
+    
+    useEffect(() => {
+        if(!authenticated) {
+            navigate('/signin');
+        }
+    }, [authenticated , navigate]);
 
     const submitHandler = async (event) => {
         event.preventDefault();

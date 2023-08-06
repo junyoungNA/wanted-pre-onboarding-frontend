@@ -4,7 +4,7 @@ import {instance} from '../util/axios';
 import { useNavigate } from 'react-router-dom';
 import {useAuthDispatch, useAuthState } from '../context/auth';
 
-const Login = () => {
+const SignIn = () => {
     const navigate = useNavigate();
     const dispatch = useAuthDispatch();
     const {authenticated} = useAuthState(); //context auth
@@ -28,11 +28,10 @@ const Login = () => {
         //true면 return
         if(checkValue('email', email) ||checkValue('password',password)) return;
         const res = await instance.post('/auth/signin',inputs);
-        console.log(res,'res');
+        // console.log(res,'res');
         if(res.status === 200 || res.status === 201) {
             dispatch('LOGIN', res.data.access_token);
-            console.log(authenticated,'res');
-            navigate('/todo');
+            if(authenticated)  navigate('/todo');
         }
         
     }
@@ -90,4 +89,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default SignIn;
