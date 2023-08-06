@@ -3,8 +3,8 @@ import { TodoContext } from '../context/todo.js';
 import './Todo.css';
 const TodoList = () => {
     const [todo, setTodo] = useState('');
-    const [putTodo, setPutTodo] = useState(''); //수정 input
-    const [isUpdate, setUpdate]  = useState(false) //수정중 확인
+    const [modifyTodo, setModifyTodo] = useState(''); //수정 input
+    const [isModify, setModify]  = useState(null) //수정중 확인
 
     const {todos:todoList, addTodo, updateTodo, deleteTodo} = useContext(TodoContext);
 
@@ -16,11 +16,13 @@ const TodoList = () => {
         }
     }
 
-    const onChangHandler = (todo) => async (event) => {
+    const onModifyHandler = (todo) => async (event) => {
         try {
-            const newTodo = {...todo, isCompleted: !todo.isCompleted};
-            const res = await updateTodo(newTodo);
-            
+            const res = await updateTodo(todo);
+            if(res === 200 && isModify) {
+                setModify(null);
+                setModifyTodo('');
+            } 
         }catch(error) {
             console.log(error);
         }
@@ -32,6 +34,16 @@ const TodoList = () => {
             console.log(error);
         }
     }
+    
+    const onModifyText = (id, todo) => () => {
+        setModify(id);
+        setModifyTodo(todo);
+    }
+
+    const onModifyCancle =  () => {
+        setModify(null);
+        setModifyTodo('');
+    }
 
     return (
         <section className='todo-section'>
@@ -40,14 +52,24 @@ const TodoList = () => {
                 <button data-testid="new-todo-add-button" type='submit'>추가</button>
             </form>
             <ul className='todo-ul'>
-                {todoList.length > 0 && todoList?.map((todo) => 
+                {todoList.length > 0 && todoList?.map((todo) =>
                     <li className='todo-item'key={todo.id}>
-                        <label>
-                            <input type="checkbox" checked={todo.isCompleted} onChange={onChangHandler(todo)}/>
-                            <span>{todo.todo}</span>
-                            <button data-testid="modify-button">수정</button>
-                            <button data-testid="delete-button" onClick={onDeleteHandler(todo.id)}>삭제</button>
-                        </label>
+                        {isModify === todo.id ? 
+                        <>
+                            <input data-testid='modify-input' type="text"  value={modifyTodo} onChange={(event) => setModifyTodo(event.target.value)}/>
+                            <button data-testid="submit-button" onClick={onModifyHandler({...todo, todo:modifyTodo})} >제출</button>
+                            <button data-testid="cancel-button" onClick={onModifyCancle}>취소</button>
+                        </> 
+                        :   
+                        <>
+                            <label>
+                                <input type="checkbox" checked={todo.isCompleted} onChange={onModifyHandler({...todo, isCompleted : !todo.isCompleted})}/>
+                                <span>{todo.todo}</span>
+                            </label> 
+                                <button data-testid="modify-button" onClick={onModifyText(todo.id, todo.todo)}>수정</button>
+                                <button data-testid="delete-button" onClick={onDeleteHandler(todo.id)}>삭제</button>
+                        </>
+                        }
                     </li>
                 )}
             </ul>

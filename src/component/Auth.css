@@ -1,16 +1,4 @@
-input {
-    width: inherit;
-    height: 40px;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-button {
-    width: inherit;
-    height: 30px;
-}
-
-.signUpForm {
+.auth-form {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -19,3 +7,16 @@ button {
     flex-direction: column;
     width: 400px;
 }
+
+.auth-form > input {
+    width: inherit;
+    height: 40px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.auth-form > button {
+    width: inherit;
+    height: 30px;
+}
+

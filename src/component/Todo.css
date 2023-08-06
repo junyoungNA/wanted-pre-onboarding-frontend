@@ -7,7 +7,9 @@
 
 .todo-form {
     margin-top: 30px;
+    margin-bottom: 50px;
     display: flex;
+    
 }
 
 .todo-form > input {
@@ -24,25 +26,34 @@
 }
 
 .todo-ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     width: 500px;
 }
 
 .todo-item {
     display: flex;
-    margin-bottom: 10px;
+    align-items: center;
+    margin-bottom: 40px;
+    
 }
 
+.todo-item ,
 .todo-item > label {
     display: flex;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
 }
-.todo-item > label > input {
-    margin-top: 10px;
-    box-sizing: border-box;
+
+.todo-item > input {
+    margin-right: 20px;
+}
+
+.todo-item > label > input[type='checkbox'] {
+    margin-right: 20px;
     width: 20px;
-    margin-right: 10px;
+    cursor: pointer;
 }
 
 .todo-item > label > span {
@@ -51,7 +62,12 @@
     word-wrap: break-word;
 } 
 
-.todo-item > label > button {
+.todo-item > input[type='text'] {
+    width: 300px;
+    height: 25px;
+}
+
+.todo-item  > button {
     width: 60px;
     height: 25px;
     margin-left: 15px;

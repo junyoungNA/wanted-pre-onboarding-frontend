@@ -42,7 +42,6 @@ export const TodoProvider = ({ children }) => {
                 const findIndx = todos.findIndex((todo) => todo.id === id);
                 const newTodos = todos.slice();
                 newTodos.splice(findIndx, 1);
-                console.log(newTodos);
                 setTodos(newTodos);
             }
         }catch(error) {
@@ -59,6 +58,7 @@ export const TodoProvider = ({ children }) => {
                 newTodos[findIndx] = res.data;
                 setTodos(newTodos);
             }
+            return res.status;
         }catch(error) {
             console.log(error);
         }

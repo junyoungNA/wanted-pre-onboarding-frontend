@@ -74,7 +74,7 @@ const SignUp = () => {
 
     return (
         <>
-            <form className='signUpForm' onSubmit={submitHandler}>
+            <form className='auth-form' onSubmit={submitHandler}>
                 <input data-testid="email-input" name='email' value={email} onChange={onChangeHandler} placeholder='이메일'/>
                 {errors.email && <span style={{color: 'rgb(239 68 68)', marginBottom: '4px' }}>{errors.email}</span>}
                 <input data-testid="password-input" name='password' value={password} placeholder='비밀번호' onChange={onChangeHandler} />
