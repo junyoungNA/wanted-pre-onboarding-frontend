@@ -19,6 +19,7 @@ const SignIn = () => {
 
     useEffect(() => {
         if(authenticated) {
+            console.log(authenticated);
             navigate('/todo');
         } 
     },[authenticated, navigate])
@@ -31,7 +32,6 @@ const SignIn = () => {
         // console.log(res,'res');
         if(res.status === 200 || res.status === 201) {
             dispatch('LOGIN', res.data.access_token);
-            if(authenticated)  navigate('/todo');
         }
         
     }

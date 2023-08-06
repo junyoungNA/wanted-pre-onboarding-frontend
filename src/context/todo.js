@@ -1,16 +1,21 @@
 import React, { createContext, useEffect, useState } from 'react';
 import {instance} from '../util/axios';
+import { useAuthState } from './auth';
+
 // 빈 배열로 초기화된 TodoContext를 생성합니다.
 export const TodoContext = createContext([]);
 
 // TodoProvider 컴포넌트를 만듭니다.
 export const TodoProvider = ({ children }) => {
+    const {authenticated} = useAuthState();
     // TODO 리스트를 담을 상태와 상태를 업데이트하는 함수를 생성합니다.
     const [todos, setTodos] = useState([]);
 
     useEffect(() => {
-        getTodos();
-    }, [])
+        if(authenticated) {
+            getTodos();
+        }
+    }, [authenticated]);
 
     const getTodos = async () => {
         try {
