@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { TodoContext } from '../context/todo.js';
+import './Todo.css';
 const TodoList = () => {
     const [todo, setTodo] = useState('');
     const [putTodo, setPutTodo] = useState(''); //수정 input
@@ -33,22 +34,24 @@ const TodoList = () => {
     }
 
     return (
-        <>
-            {todoList.length > 0 && todoList?.map((todo) => 
-                <li key={todo.id}>
-                    <label>
-                        <input type="checkbox" checked={todo.isCompleted} onChange={onChangHandler(todo)}/>
-                        <span>{todo.todo}</span>
-                        <button data-testid="modify-button">수정</button>
-                        <button data-testid="delete-button" onClick={onDeleteHandler(todo.id)}>삭제</button>
-                    </label>
-                </li>
-            )}
-            <form onSubmit={submitHandler} >
+        <section className='todo-section'>
+            <form onSubmit={submitHandler} className='todo-form'>
                 <input data-testid="new-todo-input"  value={todo} onChange={(event) =>setTodo(event.target.value) }placeholder='todo'/>  
                 <button data-testid="new-todo-add-button" type='submit'>추가</button>
             </form>
-        </>
+            <ul className='todo-ul'>
+                {todoList.length > 0 && todoList?.map((todo) => 
+                    <li className='todo-item'key={todo.id}>
+                        <label>
+                            <input type="checkbox" checked={todo.isCompleted} onChange={onChangHandler(todo)}/>
+                            <span>{todo.todo}</span>
+                            <button data-testid="modify-button">수정</button>
+                            <button data-testid="delete-button" onClick={onDeleteHandler(todo.id)}>삭제</button>
+                        </label>
+                    </li>
+                )}
+            </ul>
+        </section>
     )
 }
 

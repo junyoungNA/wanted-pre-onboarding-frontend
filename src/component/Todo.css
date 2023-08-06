@@ -1,0 +1,58 @@
+.todo-section {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.todo-form {
+    margin-top: 30px;
+    display: flex;
+}
+
+.todo-form > input {
+    width: 300px;
+}
+
+.todo-form > button {
+    margin-left: 10px;
+    border: none;
+    height: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100px;
+}
+
+.todo-ul {
+    width: 500px;
+}
+
+.todo-item {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.todo-item > label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.todo-item > label > input {
+    margin-top: 10px;
+    box-sizing: border-box;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.todo-item > label > span {
+    width: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+} 
+
+.todo-item > label > button {
+    width: 60px;
+    height: 25px;
+    margin-left: 15px;
+}

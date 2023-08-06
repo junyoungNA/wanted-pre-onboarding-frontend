@@ -29,7 +29,7 @@ const Login = () => {
         if(checkValue('email', email) ||checkValue('password',password)) return;
         const res = await instance.post('/auth/signin',inputs);
         console.log(res,'res');
-        if(res.status === 200 | res.status === 201) {
+        if(res.status === 200 || res.status === 201) {
             dispatch('LOGIN', res.data.access_token);
             console.log(authenticated,'res');
             navigate('/todo');
