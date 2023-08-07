@@ -18,7 +18,3 @@ https://wanted-pre-onboarding-frontend-blush-mu.vercel.app/
     <li>Axios</li>
     <li>React-router-dom</li>
 </ul>
-
-## 이력서
-
-https://drive.google.com/file/d/1rE02yPFMRXZM_3ZFUybFBb_LOQbM0EZ7/view?usp=sharing

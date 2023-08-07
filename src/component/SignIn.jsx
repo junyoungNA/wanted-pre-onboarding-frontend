@@ -7,6 +7,7 @@ import {useAuthDispatch, useAuthState } from '../context/auth';
 const SignIn = () => {
     const navigate = useNavigate();
     const dispatch = useAuthDispatch();
+    //context
     const {authenticated} = useAuthState(); //context auth
     const [inputs, setInputs] = useState({
         email:'',     // 이메일 

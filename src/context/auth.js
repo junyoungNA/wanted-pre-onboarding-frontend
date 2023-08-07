@@ -12,7 +12,6 @@ const reducer = (state, {type ,payload }) => {
             return {...state, authenticated : false}
         default : throw new Error(`Unknown action type: ${type}`)
     }
-    
 }
 
 const StateContext = createContext({
